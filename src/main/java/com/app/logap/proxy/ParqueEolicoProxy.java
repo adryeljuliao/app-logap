@@ -21,7 +21,7 @@ public class ParqueEolicoProxy {
 	}
 	
 	public void remover(ParqueEolico objeto) {
-		repository.delete(objeto);
+		repository.remove(objeto);
 	}
 	
 	public ParqueEolico buscar(Long id) {

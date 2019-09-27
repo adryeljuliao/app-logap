@@ -33,23 +33,26 @@ public class GenericHibernateDAO<T, ID extends Serializable> implements GenericD
 
 	@Override
 	public void update(T object) {
-		novaSessao();
 		try {
 			sessao.beginTranslaction();
 			sessao.update(object);
 			sessao.commitTranslaction();
 		} catch (Exception e) {
-			sessao.beginTranslaction();
 			sessao.rollbackTranslaction();
-			sessao.commitTranslaction();
-			throw new PersistenceException("Erro ao persistir entidade", e);
+			throw new ExceptionCustom("Erro ao atualizar entidade do banco", e);
 		}
 	}
 
 	@Override
-	public void delete(T object) {
-		// TODO Auto-generated method stub
-
+	public void remove(T object) {
+		try {
+			sessao.beginTranslaction();
+			sessao.remove(object);
+			sessao.commitTranslaction();
+		} catch (Exception e) {
+			sessao.rollbackTranslaction();
+			throw new ExceptionCustom("Erro ao remover entidade do banco", e);
+		}
 	}
 
 	@Override

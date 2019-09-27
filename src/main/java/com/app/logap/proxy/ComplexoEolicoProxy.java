@@ -22,7 +22,7 @@ public class ComplexoEolicoProxy {
 	}
 
 	public void remover(ComplexoEolico objeto) {
-		repository.delete(objeto);
+		repository.remove(objeto);
 	}
 
 	public ComplexoEolico buscar(Long id) {

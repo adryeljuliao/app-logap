@@ -40,6 +40,10 @@ public class SessaoHibernateUtils {
 		entityManager.merge(obj);
 	}
 	
+	public void remove(Object obj) {
+		entityManager.remove(obj);
+	}
+	
 	public List<?> findAll(String sql) {
 		Query query = entityManager.createQuery(sql);
 		return query.getResultList();

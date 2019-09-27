@@ -40,8 +40,8 @@
 					</div>
 					<br />
 					<br />
-					<p:dataTable id="basicDT" var="complexo"
-						value="#{complexoEolicoBean.listaComplexos}">
+					<p:dataTable id="tableComplexos" var="complexo"
+						value="#{complexoEolicoBean.listaComplexos}" emptyMessage="Sem dados">
 						<p:column headerText="Id">
 							<h:outputText value="#{complexo.identificador}" />
 						</p:column>
@@ -54,6 +54,13 @@
 						<p:column headerText="Edit">
 							<p:commandButton update="teste"
 								oncomplete="PF('multiCarDialog').show()" value="Edit">
+								<f:setPropertyActionListener value="#{complexo}"
+									target="#{complexoEolicoBean.complexoEolico}" />
+							</p:commandButton>
+						</p:column>
+						<p:column headerText="Del">
+							<p:commandButton value="Del"
+								action="#{complexoEolicoBean.remover()}" update="tableComplexos">
 								<f:setPropertyActionListener value="#{complexo}"
 									target="#{complexoEolicoBean.complexoEolico}" />
 							</p:commandButton>
@@ -100,13 +107,11 @@
 					<br />
 					<p:outputLabel for="editNomeComplexo"
 						value="Informe o nome do complexo" />
-					<p:inputText
-						value="#{complexoEolicoBean.complexoEolico.nome}"
+					<p:inputText value="#{complexoEolicoBean.complexoEolico.nome}"
 						id="editNomeComplexo" />
 					<br />
 					<p:outputLabel for="editUfComplexo" value="Informe UF" />
-					<p:inputText
-						value="#{complexoEolicoBean.complexoEolico.uf}"
+					<p:inputText value="#{complexoEolicoBean.complexoEolico.uf}"
 						id="editUfComplexo" />
 					<br />
 					<p:commandButton value="Cadastrar"

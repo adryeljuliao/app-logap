@@ -23,7 +23,9 @@ public class ComplexoEolico implements Serializable {
 	private Long id;
 	@Column(unique = true, length = 45)
 	private String nome;
+	@Column(length = 45)
 	private String uf;
+	@Column(length = 45)
 	private String identificador;
 
 	@OneToMany(mappedBy = "complexoEolico", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

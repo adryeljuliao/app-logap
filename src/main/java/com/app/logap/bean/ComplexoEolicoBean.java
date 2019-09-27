@@ -28,12 +28,29 @@ public class ComplexoEolicoBean {
 		complexoEolicoEscolhido = new ComplexoEolico();
 	}
 
-	public void cadastrar() throws ExceptionCustom {
+	public void cadastrar() {
 		try {
 			complexoEolicoProxy.salvar(complexoEolico);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "System Error"));
+			addMessagem(e.getMessage() + "");
+		}
+		limparFormulario();
+	}
+
+	public void atualizar() {
+		try {
+			complexoEolicoProxy.atualizar(complexoEolico);
+		} catch (Exception e) {
+			addMessagem(e.getMessage() + "");
+		}
+		limparFormulario();
+	}
+
+	public void remover() {
+		try {
+			complexoEolicoProxy.remover(complexoEolico);
+		} catch (Exception e) {
+			addMessagem(e.getMessage() + "");
 		}
 		limparFormulario();
 	}
@@ -62,6 +79,9 @@ public class ComplexoEolicoBean {
 		this.complexoEolicoEscolhido = complexoEolicoEscolhido;
 	}
 
-	
+	public void addMessagem(String msg) {
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", msg));
+	}
 
 }
