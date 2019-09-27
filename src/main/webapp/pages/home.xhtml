@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link rel="stylesheet" type="text/css" href="../resources/styles.css" />
+
+</h:head>
+<body>
+	<p:outputPanel id="test">
+
+		<p:tabView>
+			<p:tab title="COMPLEXO EÓLICO">
+				<h:form id="form-cadastro-complexo" prependId="false">
+					<p:messages id="messages" showDetail="true" closable="true">
+						<p:autoUpdate />
+					</p:messages>
+					<div class="form-cadastro">
+						<p:outputLabel for="identificadorComplexo"
+							value="Informe o identificador" />
+						<p:inputText
+							value="#{complexoEolicoBean.complexoEolico.identificador}"
+							id="identificadorComplexo" />
+						<br />
+						<p:outputLabel for="nomeComplexo"
+							value="Informe o nome do complexo" />
+						<p:inputText value="#{complexoEolicoBean.complexoEolico.nome}"
+							id="nomeComplexo" />
+						<br />
+						<p:outputLabel for="ufComplexo" value="Informe UF" />
+						<p:inputText value="#{complexoEolicoBean.complexoEolico.uf}"
+							id="ufComplexo" />
+						<br />
+						<p:commandButton value="Cadastrar"
+							action="#{complexoEolicoBean.cadastrar()}" update="@form, test"
+							process="@this, @form" />
+					</div>
+					<br />
+					<br />
+					<p:dataTable id="basicDT" var="complexo"
+						value="#{complexoEolicoBean.listaComplexos}">
+						<p:column headerText="Id">
+							<h:outputText value="#{complexo.identificador}" />
+						</p:column>
+						<p:column headerText="Nome">
+							<h:outputText value="#{complexo.nome}" />
+						</p:column>
+						<p:column headerText="UF">
+							<h:outputText value="#{complexo.uf}" />
+						</p:column>
+						<p:column headerText="Edit">
+							<p:commandButton update="teste"
+								oncomplete="PF('multiCarDialog').show()" value="Edit">
+								<f:setPropertyActionListener value="#{complexo}"
+									target="#{complexoEolicoBean.complexoEolico}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
+				</h:form>
+			</p:tab>
+			<p:tab title="PARQUE EÓLICO">
+				<h:form id="form-cadastro-parque" prependId="false">
+					<div class="form-cadastro">
+						<p:outputLabel for="selecionarComplexo" value="Basic:" />
+						<p:selectOneMenu id="selecionarComplexo"
+							value="#{complexoEolicoBean.complexoEolico}" style="width:125px">
+							<f:selectItems value="#{complexoEolicoBean.listaComplexos}"
+								var="complexo" itemValue="#{complexo}"
+								itemLabel="#{complexo.nome}" />
+							<p:ajax event="blur" process="@this" update="@form" />
+						</p:selectOneMenu>
+					</div>
+				</h:form>
+			</p:tab>
+			<p:tab title="AEROGERADOR">
+				<p:tooltip />
+				<h:form>
+					<p:messages id="messages" showDetail="true" closable="true">
+						<p:autoUpdate />
+					</p:messages>
+					<p:commandButton value="Fatal" action="#{complexoEolicoBean.fatal}" />
+				</h:form>
+			</p:tab>
+		</p:tabView>
+
+		<p:dialog header="Selected Cars" widgetVar="multiCarDialog"
+			modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+			width="50%">
+			<h:form id="form-editar-complexo" prependId="false">
+				<p:outputPanel styleClass="form-cadastro" id="teste">
+					<p:outputLabel for="editIdentificadorComplexo"
+						value="Informe o identificador" />
+					<p:inputText
+						value="#{complexoEolicoBean.complexoEolico.identificador}"
+						id="editIdentificadorComplexo" />
+					<br />
+					<p:outputLabel for="editNomeComplexo"
+						value="Informe o nome do complexo" />
+					<p:inputText
+						value="#{complexoEolicoBean.complexoEolico.nome}"
+						id="editNomeComplexo" />
+					<br />
+					<p:outputLabel for="editUfComplexo" value="Informe UF" />
+					<p:inputText
+						value="#{complexoEolicoBean.complexoEolico.uf}"
+						id="editUfComplexo" />
+					<br />
+					<p:commandButton value="Cadastrar"
+						action="#{complexoEolicoBean.cadastrar()}" update="@form, test"
+						process="@this, @form" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+	</p:outputPanel>
+</body>
+</html>

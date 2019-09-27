@@ -5,14 +5,18 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import com.app.logap.hibernate.utils.SessaoHibernateUtils;
+import com.app.logap.utils.exeptions.ExceptionCustom;
+import com.app.logap.utils.hibernate.SessaoHibernateUtils;
 
 public class GenericHibernateDAO<T, ID extends Serializable> implements GenericDaoAPI<T, ID> {
 
 	private SessaoHibernateUtils sessao;
 
-	public GenericHibernateDAO() {
-		sessao = new SessaoHibernateUtils("app-logap");
+	private Class<T> clazz;
+
+	public GenericHibernateDAO(Class<T> clazz) {
+		sessao = new SessaoHibernateUtils();
+		this.clazz = clazz;
 	}
 
 	@Override
@@ -23,17 +27,23 @@ public class GenericHibernateDAO<T, ID extends Serializable> implements GenericD
 			sessao.commitTranslaction();
 		} catch (Exception e) {
 			sessao.rollbackTranslaction();
-			throw new PersistenceException("Erro ao persistir entidade", e);
-		} finally {
-			System.out.println("finalizou");
-			sessao.close();
+			throw new ExceptionCustom("Erro ao salvar entidade no banco", e);
 		}
 	}
 
 	@Override
 	public void update(T object) {
-		// TODO Auto-generated method stub
-
+		novaSessao();
+		try {
+			sessao.beginTranslaction();
+			sessao.update(object);
+			sessao.commitTranslaction();
+		} catch (Exception e) {
+			sessao.beginTranslaction();
+			sessao.rollbackTranslaction();
+			sessao.commitTranslaction();
+			throw new PersistenceException("Erro ao persistir entidade", e);
+		}
 	}
 
 	@Override
@@ -48,10 +58,17 @@ public class GenericHibernateDAO<T, ID extends Serializable> implements GenericD
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sql = new StringBuilder();
+		sql.append("from ");
+		sql.append(clazz.getSimpleName());
+		return sessao.getEntityManager().createQuery(sql.toString()).getResultList();
+	}
+
+	private void novaSessao() {
+		sessao = new SessaoHibernateUtils();
 	}
 
 }

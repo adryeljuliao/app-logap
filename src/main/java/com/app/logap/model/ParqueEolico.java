@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_parque_eolico")
+@Table(name = "tbl_parque_eolico", schema = "public")
 public class ParqueEolico implements Serializable {
 	private static final long serialVersionUID = -3254825614666388585L;
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,13 +14,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_complexo_eolico")
+@Table(name = "tbl_complexo_eolico", schema = "public")
 public class ComplexoEolico implements Serializable {
 	private static final long serialVersionUID = 772037773835319000L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(unique = true, length = 45)
 	private String nome;
 	private String uf;
 	private String identificador;

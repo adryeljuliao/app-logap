@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_aerogerador")
+@Table(name = "tbl_aerogerador", schema = "public")
 public class Aerogerador implements Serializable {
 
 	private static final long serialVersionUID = -4520877008690990114L;
