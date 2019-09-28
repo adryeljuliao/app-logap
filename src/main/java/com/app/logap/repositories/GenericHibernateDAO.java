@@ -1,11 +1,11 @@
-package com.app.logap.dao;
+package com.app.logap.repositories;
 
 import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import com.app.logap.model.ComplexoEolico;
+import com.app.logap.models.ComplexoEolico;
 import com.app.logap.utils.exeptions.ExceptionCustom;
 import com.app.logap.utils.sessao.SessaoHibernateUtils;
 

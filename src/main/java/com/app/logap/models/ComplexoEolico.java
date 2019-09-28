@@ -1,4 +1,4 @@
-package com.app.logap.model;
+package com.app.logap.models;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,10 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "tbl_complexo_eolico", schema = "public")
@@ -75,5 +73,15 @@ public class ComplexoEolico implements Serializable {
 	public void setParquesEolicos(List<ParqueEolico> parquesEolicos) {
 		this.parquesEolicos = parquesEolicos;
 	}
-
+	
+	public void adicionarParqueEolico(ParqueEolico parqueEolico) {
+		parquesEolicos.add(parqueEolico);
+		parqueEolico.setComplexoEolico(this);
+	}
+	
+	public void removerParqueEolico(ParqueEolico parqueEolico) {
+		parquesEolicos.remove(parqueEolico);
+		parqueEolico.setComplexoEolico(null);
+	}
+	
 }

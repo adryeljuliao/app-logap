@@ -1,4 +1,4 @@
-package com.app.logap.model;
+package com.app.logap.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.app.logap.bean;
+package com.app.logap.controllers;
 
 import java.io.IOException;
 

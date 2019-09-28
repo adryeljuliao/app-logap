@@ -1,4 +1,4 @@
-package com.app.logap.bean;
+package com.app.logap.controllers.complexoeolico;
 
 import java.util.List;
 
@@ -8,8 +8,9 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.SelectEvent;
 
-import com.app.logap.model.ComplexoEolico;
-import com.app.logap.proxy.ComplexoEolicoProxy;
+import com.app.logap.controllers.GenericBean;
+import com.app.logap.models.ComplexoEolico;
+import com.app.logap.proxys.ComplexoEolicoProxy;
 import com.app.logap.utils.exeptions.ExceptionCustom;
 
 @ManagedBean
@@ -34,7 +35,7 @@ public class ComplexoEolicoBean extends GenericBean {
 	}
 
 	public void cadastrar() {
-		if (complexoEolicoProxy.buscar(complexoEolico).isEmpty()) {
+		if (complexoEolicoProxy.buscar(complexoEolico.getNome()).isEmpty()) {
 			complexoEolicoProxy.salvar(complexoEolico);
 			carregarListaComplexoEolico();
 			addMessageSuccess("Complexo Eólico cadastrado com sucesso");
@@ -50,7 +51,6 @@ public class ComplexoEolicoBean extends GenericBean {
 			complexoEolicoProxy.atualizar(complexoEolicoSelecionado);
 			carregarListaComplexoEolico();
 		} catch (Exception e) {
-			limparFormulario();
 			addMessageError(e.getMessage() + "");
 		}
 		limparFormulario();

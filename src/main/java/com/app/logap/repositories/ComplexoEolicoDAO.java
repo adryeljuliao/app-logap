@@ -1,8 +1,8 @@
-package com.app.logap.dao;
+package com.app.logap.repositories;
 
 import java.util.List;
 
-import com.app.logap.model.ComplexoEolico;
+import com.app.logap.models.ComplexoEolico;
 
 public class ComplexoEolicoDAO extends GenericHibernateDAO<ComplexoEolico, Long>{
 

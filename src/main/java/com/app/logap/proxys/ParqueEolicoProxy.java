@@ -1,7 +1,9 @@
-package com.app.logap.proxy;
+package com.app.logap.proxys;
 
-import com.app.logap.dao.ParqueEolicoDAO;
-import com.app.logap.model.ParqueEolico;
+import java.util.List;
+
+import com.app.logap.models.ParqueEolico;
+import com.app.logap.repositories.ParqueEolicoDAO;
 
 
 public class ParqueEolicoProxy {
@@ -28,7 +30,7 @@ public class ParqueEolicoProxy {
 		return repository.findById(id);
 	}
 	
-//	public List<ParqueEolico> buscar() {
-//		return repository.findAll();
-//	}
+	public List<ParqueEolico> buscar(ParqueEolico parqueEolico) {
+		return repository.findByName(parqueEolico.getNome());
+	}
 }

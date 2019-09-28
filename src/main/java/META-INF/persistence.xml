@@ -7,9 +7,9 @@
 	<persistence-unit name="app-logap">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>com.app.logap.model.ComplexoEolico</class>
-		<class>com.app.logap.model.Aerogerador</class>
-		<class>com.app.logap.model.ParqueEolico</class>
+		<class>com.app.logap.models.ComplexoEolico</class>
+		<class>com.app.logap.models.Aerogerador</class>
+		<class>com.app.logap.models.ParqueEolico</class>
 
 		<properties>
 

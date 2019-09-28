@@ -119,42 +119,71 @@
 				</h:form>
 			</p:tab>
 			<p:tab title="PARQUE EÓLICO">
-				
+
 				<h:form id="parqueEolico" prependId="false">
 					<div class="row mt-4">
-						<p:outputPanel styleClass="col-md-6 col-lg-6" id="panelCadastroParqueEolico">
+						<p:outputPanel styleClass="col-md-6 col-lg-6"
+							id="panelCadastroParqueEolico">
 							<div class="card">
 								<div class="card-header">Cadastrar</div>
 								<div class="card-body mt-4">
-									<div class="form-group">
-										<p:outputLabel for="identificadorParqueEolico"
-											value="Identificador" />
-										<p:inputText styleClass="form-control"
-											value="#{complexoEolicoBean.complexoEolico.identificador}"
-											id="identificadorParqueEolico" />
-									</div>
-									<div class="form-group">
-										<p:outputLabel for="nomeParqueEolico" value="Nome Complexo Eólico" />
-										<p:inputText styleClass="form-control"
-											value="#{complexoEolicoBean.complexoEolico.nome}"
-											id="nomeParqueEolico" required="true"
-											requiredMessage="Nome do Complexo Obrigatório" />
-										<p:message for="nomeParqueEolico" />
-									</div>
-									<div class="form-group">
-										<p:outputLabel for="ufParqueEolico" value="UF" />
-										<p:inputText styleClass="form-control"
-											value="#{complexoEolicoBean.complexoEolico.uf}"
-											id="ufParqueEolico" />
+									<div class="row col-12">
+										<div class="col-12" style="margin-bottom: 15px;">
+											<p:outputLabel for="nomeParqueEolico"
+												value="Nome Parque Eólico" />
+											<p:selectOneMenu id="menu" styleClass="col-12"
+												required="true"
+												value="#{parqueEolicoBean.complexoEolicoSelecionado}">
+												<f:selectItem itemLabel="Selecione um complexo eólico..."
+													itemValue="null" />
+												<f:selectItems
+													value="#{parqueEolicoBean.listaComplexoEolico}"
+													var="complexo" itemLabel="#{complexo.nome}"
+													itemValue="#{complexo.nome}" />
+												<p:ajax event="itemSelect" update="selectedItemText" />
+											</p:selectOneMenu>
+										</div>
+										<div class="form-group col-6">
+											<p:outputLabel for="nomeParqueEolico"
+												value="Nome Parque Eólico" />
+											<p:inputText styleClass="form-control"
+												value="#{parqueEolicoBean.parqueEolico.nome}"
+												id="nomeParqueEolico" required="true"
+												requiredMessage="Nome do Complexo Obrigatório" />
+											<p:message for="nomeParqueEolico" />
+										</div>
+										<div class="form-group col-6">
+											<p:outputLabel for="potenciaParqueEolico" value="Potência" />
+											<p:inputText styleClass="form-control"
+												value="#{parqueEolicoBean.parqueEolico.potenciaInstalada}"
+												id="potenciaParqueEolico" required="true" />
+										</div>
+										<div class="form-group col-6">
+											<p:outputLabel for="latitudeParqueEolico" value="Latitude" />
+											<p:inputText styleClass="form-control"
+												value="#{parqueEolicoBean.parqueEolico.latitude}"
+												id="latitudeParqueEolico" />
+										</div>
+										<div class="form-group col-6">
+											<p:outputLabel for="longitudeParqueEolico" value="Longitude" />
+											<p:inputText styleClass="form-control"
+												value="#{parqueEolicoBean.parqueEolico.longitude}"
+												id="longitudeParqueEolico" />
+										</div>
+
+
 									</div>
 									<p:commandButton value="Cadastrar"
-										action="#{complexoEolicoBean.cadastrar()}" update="@form"
+										action="#{parqueEolicoBean.cadastrar()}" update="@form"
 										process="@this, panelCadastroParqueEolico" />
 								</div>
 							</div>
+							<h:outputText id="selectedItemText"
+								value="#{parqueEolicoBean.complexoEolicoSelecionado}" />
 						</p:outputPanel>
 
-						<p:outputPanel styleClass="col-md-6 col-lg-6" id="panelAtualizarParqueEolico">
+						<p:outputPanel styleClass="col-md-6 col-lg-6"
+							id="panelAtualizarParqueEolico">
 							<div class="card">
 								<div class="card-header">Editar</div>
 								<div class="card-body mt-4">
@@ -214,6 +243,7 @@
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
+
 
 				</h:form>
 			</p:tab>

@@ -1,4 +1,4 @@
-package com.app.logap.model;
+package com.app.logap.models;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,8 +25,8 @@ public class ParqueEolico implements Serializable {
 	private Long id;
 	@Column(unique = true, length = 45, nullable = false)
 	private String nome;
-	private Double latitude;
-	private Double longitude;
+	private Integer latitude;
+	private Integer longitude;
 	@Column(nullable = false)
 	private Double potenciaInstalada;
 
@@ -45,19 +45,19 @@ public class ParqueEolico implements Serializable {
 		this.id = id;
 	}
 
-	public Double getLatitude() {
+	public Integer getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(Integer latitude) {
 		this.latitude = latitude;
 	}
 
-	public Double getLongitude() {
+	public Integer getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(Integer longitude) {
 		this.longitude = longitude;
 	}
 

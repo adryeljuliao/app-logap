@@ -1,6 +1,6 @@
-package com.app.logap.dao;
+package com.app.logap.repositories;
 
-import com.app.logap.model.ParqueEolico;
+import com.app.logap.models.ParqueEolico;
 
 public class ParqueEolicoDAO extends GenericHibernateDAO<ParqueEolico, Long>{
 

@@ -1,4 +1,4 @@
-package com.app.logap.bean;
+package com.app.logap.controllers;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import com.app.logap.model.Usuario;
+import com.app.logap.models.Usuario;
 import com.app.logap.utils.sessao.SessaoContexto;
 
 @ManagedBean

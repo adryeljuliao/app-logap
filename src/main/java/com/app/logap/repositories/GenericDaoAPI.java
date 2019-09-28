@@ -1,4 +1,4 @@
-package com.app.logap.dao;
+package com.app.logap.repositories;
 
 import java.io.Serializable;
 import java.util.List;

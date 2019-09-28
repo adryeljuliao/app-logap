@@ -1,9 +1,9 @@
-package com.app.logap.proxy;
+package com.app.logap.proxys;
 
 import java.util.List;
 
-import com.app.logap.dao.ComplexoEolicoDAO;
-import com.app.logap.model.ComplexoEolico;
+import com.app.logap.models.ComplexoEolico;
+import com.app.logap.repositories.ComplexoEolicoDAO;
 
 public class ComplexoEolicoProxy {
 
@@ -25,8 +25,8 @@ public class ComplexoEolicoProxy {
 		repository.remove(objeto);
 	}
 
-	public List<ComplexoEolico> buscar(ComplexoEolico complexoEolico) {
-		return repository.findByName(complexoEolico.getNome());
+	public List<ComplexoEolico> buscar(String nome) {
+		return repository.findByName(nome);
 	}
 
 	public List<ComplexoEolico> buscarTodos() {
