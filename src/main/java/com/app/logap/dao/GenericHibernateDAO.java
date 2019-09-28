@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import com.app.logap.model.ComplexoEolico;
 import com.app.logap.utils.exeptions.ExceptionCustom;
 import com.app.logap.utils.sessao.SessaoHibernateUtils;
 
@@ -58,6 +59,17 @@ public abstract class GenericHibernateDAO<T, ID extends Serializable> implements
 	@Override
 	public T findById(ID id) {
 		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> findByName(String name) {
+		StringBuilder sql = new StringBuilder("from ");
+		sql.append(clazz.getSimpleName());
+		sql.append(" c ");
+		sql.append("where ");
+		sql.append("c.nome =:nome");
+		
+		return getSessao().getEntityManager().createQuery(sql.toString()).setParameter("nome", name).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

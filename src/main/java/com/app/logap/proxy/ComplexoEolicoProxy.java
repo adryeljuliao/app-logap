@@ -26,7 +26,7 @@ public class ComplexoEolicoProxy {
 	}
 
 	public List<ComplexoEolico> buscar(ComplexoEolico complexoEolico) {
-		return repository.buscarPorNome(complexoEolico);
+		return repository.findByName(complexoEolico.getNome());
 	}
 
 	public List<ComplexoEolico> buscarTodos() {

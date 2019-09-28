@@ -26,11 +26,11 @@ public class ComplexoEolicoBean extends GenericBean {
 
 	@PostConstruct
 	public void init() {
+		verificarUsuarioSessao();
 		complexoEolicoProxy = new ComplexoEolicoProxy();
 		complexoEolico = new ComplexoEolico();
 		complexoEolicoSelecionado = new ComplexoEolico();
 		carregarListaComplexoEolico();
-		verificarUsuarioSessao();
 	}
 
 	public void cadastrar() {

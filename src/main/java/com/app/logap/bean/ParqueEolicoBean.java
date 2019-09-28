@@ -2,6 +2,7 @@ package com.app.logap.bean;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -12,14 +13,16 @@ import com.app.logap.proxy.ParqueEolicoProxy;
 
 @ManagedBean
 @ViewScoped
-public class ParqueEolicoBean {
+public class ParqueEolicoBean extends GenericBean {
 
 	private ParqueEolicoProxy parqueEolicoProxy;
 	private ComplexoEolicoProxy complexoEolicoProxy;
 	private ComplexoEolico complexoEolico;
 	private ParqueEolico parqueEolico;
 
-	public ParqueEolicoBean() {
+	@PostConstruct
+	public void init() {
+		verificarUsuarioSessao();
 		complexoEolicoProxy = new ComplexoEolicoProxy();
 		parqueEolico = new ParqueEolico();
 	}
