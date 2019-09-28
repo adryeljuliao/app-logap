@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/styles.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/bootstrap/css/bootstrap.css" />
+</h:head>
+<body>
+	<div class="login-container">
+		<h:form id="form-login" prependId="false">
+			<div class="form-group">
+				<p:outputLabel for="nomeUsuario" value="Username" />
+				<p:inputText styleClass="form-control" id="nomeUsuario"
+					value="#{loginBean.usuario.nomeUsuario}" />
+				<p:outputLabel for="senha" value="Senha" />
+				<p:password styleClass="form-control" id="senha"
+					value="#{loginBean.usuario.senha}" />
+			</div>
+			<p:commandButton value="Entrar" action="#{loginBean.entrar()}"
+				process="@this, @form" />
+		</h:form>
+	</div>
+	<script type="text/javascript" src="../resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="../resources/popper/popper.min.js"></script>
+	<script type="text/javascript"
+		src="../resources/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

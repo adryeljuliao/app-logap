@@ -1,4 +1,4 @@
-package com.app.logap.utils.hibernate;
+package com.app.logap.utils.sessao;
 
 import java.util.List;
 
@@ -45,6 +45,11 @@ public class SessaoHibernateUtils {
 	}
 	
 	public List<?> findAll(String sql) {
+		Query query = entityManager.createQuery(sql);
+		return query.getResultList();
+	}
+	
+	public List<?> findByName(String sql) {
 		Query query = entityManager.createQuery(sql);
 		return query.getResultList();
 	}

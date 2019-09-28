@@ -6,9 +6,9 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import com.app.logap.utils.exeptions.ExceptionCustom;
-import com.app.logap.utils.hibernate.SessaoHibernateUtils;
+import com.app.logap.utils.sessao.SessaoHibernateUtils;
 
-public class GenericHibernateDAO<T, ID extends Serializable> implements GenericDaoAPI<T, ID> {
+public abstract class GenericHibernateDAO<T, ID extends Serializable> implements GenericDaoAPI<T, ID> {
 
 	private SessaoHibernateUtils sessao;
 
@@ -57,7 +57,6 @@ public class GenericHibernateDAO<T, ID extends Serializable> implements GenericD
 
 	@Override
 	public T findById(ID id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -70,8 +69,8 @@ public class GenericHibernateDAO<T, ID extends Serializable> implements GenericD
 		return sessao.getEntityManager().createQuery(sql.toString()).getResultList();
 	}
 
-	private void novaSessao() {
-		sessao = new SessaoHibernateUtils();
+	public SessaoHibernateUtils getSessao() {
+		return sessao;
 	}
 
 }

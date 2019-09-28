@@ -25,8 +25,8 @@ public class ComplexoEolicoProxy {
 		repository.remove(objeto);
 	}
 
-	public ComplexoEolico buscar(Long id) {
-		return repository.findById(id);
+	public List<ComplexoEolico> buscar(ComplexoEolico complexoEolico) {
+		return repository.buscarPorNome(complexoEolico);
 	}
 
 	public List<ComplexoEolico> buscarTodos() {

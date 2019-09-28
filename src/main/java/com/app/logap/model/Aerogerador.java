@@ -2,6 +2,7 @@ package com.app.logap.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,17 +20,13 @@ public class Aerogerador implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@Column(unique = true, length = 45, nullable = false)
 	private String nome;
-
 	private Double latitude;
-
 	private Double longitude;
-
 	private Double alturaTorre;
-
 	private Double diametroVarredura;
-
+	@Column(length = 45, nullable = false)
 	private String modelo;
 
 	@ManyToOne

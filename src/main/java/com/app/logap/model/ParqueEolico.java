@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,11 +23,11 @@ public class ParqueEolico implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@Column(unique = true, length = 45, nullable = false)
+	private String nome;
 	private Double latitude;
-
 	private Double longitude;
-
+	@Column(nullable = false)
 	private Double potenciaInstalada;
 
 	@ManyToOne
@@ -82,6 +83,14 @@ public class ParqueEolico implements Serializable {
 
 	public void setComplexoEolico(ComplexoEolico complexoEolico) {
 		this.complexoEolico = complexoEolico;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 }

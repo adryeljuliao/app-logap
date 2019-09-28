@@ -7,42 +7,98 @@
 
 <h:head>
 	<link rel="stylesheet" type="text/css" href="../resources/styles.css" />
-
+	<link rel="stylesheet" type="text/css"
+		href="../resources/css/styles.css" />
+	<link rel="stylesheet" type="text/css"
+		href="../resources/bootstrap/css/bootstrap.css" />
 </h:head>
 <body>
-	<p:outputPanel id="test">
+	<p:outputPanel id="home-view">
 
 		<p:tabView>
 			<p:tab title="COMPLEXO EÓLICO">
+				<p:messages id="messagesComplexoEolico" showDetail="true"
+					closable="true">
+					<p:autoUpdate />
+				</p:messages>
 				<h:form id="form-cadastro-complexo" prependId="false">
-					<p:messages id="messages" showDetail="true" closable="true">
-						<p:autoUpdate />
-					</p:messages>
-					<div class="form-cadastro">
-						<p:outputLabel for="identificadorComplexo"
-							value="Informe o identificador" />
-						<p:inputText
-							value="#{complexoEolicoBean.complexoEolico.identificador}"
-							id="identificadorComplexo" />
-						<br />
-						<p:outputLabel for="nomeComplexo"
-							value="Informe o nome do complexo" />
-						<p:inputText value="#{complexoEolicoBean.complexoEolico.nome}"
-							id="nomeComplexo" />
-						<br />
-						<p:outputLabel for="ufComplexo" value="Informe UF" />
-						<p:inputText value="#{complexoEolicoBean.complexoEolico.uf}"
-							id="ufComplexo" />
-						<br />
-						<p:commandButton value="Cadastrar"
-							action="#{complexoEolicoBean.cadastrar()}" update="@form, test"
-							process="@this, @form" />
+					<div class="row mt-4">
+						<p:outputPanel styleClass="col-md-6 col-lg-6" id="panelCadastro">
+							<div class="card">
+								<div class="card-header">Cadastrar</div>
+								<div class="card-body mt-4">
+									<div class="form-group">
+										<p:outputLabel for="identificadorComplexo"
+											value="Identificador" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolico.identificador}"
+											id="identificadorComplexo" />
+									</div>
+									<div class="form-group">
+										<p:outputLabel for="nomeComplexo" value="Nome Complexo Eólico" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolico.nome}"
+											id="nomeComplexo" required="true"
+											requiredMessage="Nome do Complexo Obrigatório" />
+										<p:message for="nomeComplexo" />
+									</div>
+									<div class="form-group">
+										<p:outputLabel for="ufComplexo" value="UF" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolico.uf}"
+											id="ufComplexo" />
+									</div>
+									<p:commandButton value="Cadastrar"
+										action="#{complexoEolicoBean.cadastrar()}" update="@form"
+										process="@this, panelCadastro" />
+								</div>
+							</div>
+						</p:outputPanel>
+
+						<p:outputPanel styleClass="col-md-6 col-lg-6" id="panelAtualizar">
+							<div class="card">
+								<div class="card-header">Editar</div>
+								<div class="card-body mt-4">
+									<div class="form-group">
+										<p:outputLabel for="editarIdentificadorComplexo"
+											value="Identificador" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolicoSelecionado.identificador}"
+											id="editarIdentificadorComplexo" />
+									</div>
+									<div class="form-group">
+										<p:outputLabel for="editarNomeComplexo"
+											value="Nome Complexo Eólico" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolicoSelecionado.nome}"
+											id="editarNomeComplexo" required="true"
+											requiredMessage="Nome do Complexo Obrigatório" />
+										<p:message for="editarNomeComplexo" />
+									</div>
+									<div class="form-group">
+										<p:outputLabel for="editarUfComplexo" value="UF" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolicoSelecionado.uf}"
+											id="editarUfComplexo" />
+									</div>
+									<p:commandButton value="Cadastrar"
+										action="#{complexoEolicoBean.atualizar()}" update="@form"
+										process="@this, panelAtualizar" />
+								</div>
+							</div>
+						</p:outputPanel>
 					</div>
+
 					<br />
 					<br />
 					<p:dataTable id="tableComplexos" var="complexo"
-						value="#{complexoEolicoBean.listaComplexos}" emptyMessage="Sem dados">
-						<p:column headerText="Id">
+						value="#{complexoEolicoBean.listaComplexoEolico}"
+						emptyMessage="Sem dados" selectionMode="single"
+						selection="#{complexoEolicoBean.complexoEolicoSelecionado}"
+						rowKey="#{complexo.id}">
+						<p:ajax event="rowSelect"
+							listener="#{complexoEolicoBean.linhaSelecionada}" update="@form" />
+						<p:column headerText="Identificador">
 							<h:outputText value="#{complexo.identificador}" />
 						</p:column>
 						<p:column headerText="Nome">
@@ -51,18 +107,11 @@
 						<p:column headerText="UF">
 							<h:outputText value="#{complexo.uf}" />
 						</p:column>
-						<p:column headerText="Edit">
-							<p:commandButton update="teste"
-								oncomplete="PF('multiCarDialog').show()" value="Edit">
-								<f:setPropertyActionListener value="#{complexo}"
-									target="#{complexoEolicoBean.complexoEolico}" />
-							</p:commandButton>
-						</p:column>
-						<p:column headerText="Del">
-							<p:commandButton value="Del"
+						<p:column headerText="Remover" styleClass="justify-content-center">
+							<p:commandButton value="Excluir" process="@this"
 								action="#{complexoEolicoBean.remover()}" update="tableComplexos">
 								<f:setPropertyActionListener value="#{complexo}"
-									target="#{complexoEolicoBean.complexoEolico}" />
+									target="#{complexoEolicoBean.complexoEolicoSelecionado}" />
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>
@@ -70,56 +119,112 @@
 				</h:form>
 			</p:tab>
 			<p:tab title="PARQUE EÓLICO">
-				<h:form id="form-cadastro-parque" prependId="false">
-					<div class="form-cadastro">
-						<p:outputLabel for="selecionarComplexo" value="Basic:" />
-						<p:selectOneMenu id="selecionarComplexo"
-							value="#{complexoEolicoBean.complexoEolico}" style="width:125px">
-							<f:selectItems value="#{complexoEolicoBean.listaComplexos}"
-								var="complexo" itemValue="#{complexo}"
-								itemLabel="#{complexo.nome}" />
-							<p:ajax event="blur" process="@this" update="@form" />
-						</p:selectOneMenu>
+				
+				<h:form id="parqueEolico" prependId="false">
+					<div class="row mt-4">
+						<p:outputPanel styleClass="col-md-6 col-lg-6" id="panelCadastroParqueEolico">
+							<div class="card">
+								<div class="card-header">Cadastrar</div>
+								<div class="card-body mt-4">
+									<div class="form-group">
+										<p:outputLabel for="identificadorParqueEolico"
+											value="Identificador" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolico.identificador}"
+											id="identificadorParqueEolico" />
+									</div>
+									<div class="form-group">
+										<p:outputLabel for="nomeParqueEolico" value="Nome Complexo Eólico" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolico.nome}"
+											id="nomeParqueEolico" required="true"
+											requiredMessage="Nome do Complexo Obrigatório" />
+										<p:message for="nomeParqueEolico" />
+									</div>
+									<div class="form-group">
+										<p:outputLabel for="ufParqueEolico" value="UF" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolico.uf}"
+											id="ufParqueEolico" />
+									</div>
+									<p:commandButton value="Cadastrar"
+										action="#{complexoEolicoBean.cadastrar()}" update="@form"
+										process="@this, panelCadastroParqueEolico" />
+								</div>
+							</div>
+						</p:outputPanel>
+
+						<p:outputPanel styleClass="col-md-6 col-lg-6" id="panelAtualizarParqueEolico">
+							<div class="card">
+								<div class="card-header">Editar</div>
+								<div class="card-body mt-4">
+									<div class="form-group">
+										<p:outputLabel for="editarIdentificadorParqueEolico"
+											value="Identificador" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolicoSelecionado.identificador}"
+											id="editarIdentificadorParqueEolico" />
+									</div>
+									<div class="form-group">
+										<p:outputLabel for="editarNomeParqueEolico"
+											value="Nome Complexo Eólico" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolicoSelecionado.nome}"
+											id="editarNomeParqueEolico" required="true"
+											requiredMessage="Nome do Complexo Obrigatório" />
+										<p:message for="editarNomeParqueEolico" />
+									</div>
+									<div class="form-group">
+										<p:outputLabel for="editarUfParqueEolico" value="UF" />
+										<p:inputText styleClass="form-control"
+											value="#{complexoEolicoBean.complexoEolicoSelecionado.uf}"
+											id="editarUfParqueEolico" />
+									</div>
+									<p:commandButton value="Cadastrar"
+										action="#{complexoEolicoBean.atualizar()}" update="@form"
+										process="@this, panelAtualizarParqueEolico" />
+								</div>
+							</div>
+						</p:outputPanel>
 					</div>
+
+					<br />
+					<br />
+					<p:dataTable id="tableParques" var="complexo"
+						value="#{complexoEolicoBean.listaComplexoEolico}"
+						emptyMessage="Sem dados" selectionMode="single"
+						selection="#{complexoEolicoBean.complexoEolicoSelecionado}"
+						rowKey="#{complexo.id}">
+						<p:ajax event="rowSelect"
+							listener="#{complexoEolicoBean.linhaSelecionada}" update="@form" />
+						<p:column headerText="Identificador">
+							<h:outputText value="#{complexo.identificador}" />
+						</p:column>
+						<p:column headerText="Nome">
+							<h:outputText value="#{complexo.nome}" />
+						</p:column>
+						<p:column headerText="UF">
+							<h:outputText value="#{complexo.uf}" />
+						</p:column>
+						<p:column headerText="Remover" styleClass="justify-content-center">
+							<p:commandButton value="Excluir" process="@this"
+								action="#{complexoEolicoBean.remover()}" update="tableParques">
+								<f:setPropertyActionListener value="#{complexo}"
+									target="#{complexoEolicoBean.complexoEolicoSelecionado}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+
 				</h:form>
 			</p:tab>
 			<p:tab title="AEROGERADOR">
 				<p:tooltip />
 				<h:form>
-					<p:messages id="messages" showDetail="true" closable="true">
-						<p:autoUpdate />
-					</p:messages>
-					<p:commandButton value="Fatal" action="#{complexoEolicoBean.fatal}" />
 				</h:form>
 			</p:tab>
 		</p:tabView>
 
-		<p:dialog header="Selected Cars" widgetVar="multiCarDialog"
-			modal="true" showEffect="fade" hideEffect="fade" resizable="false"
-			width="50%">
-			<h:form id="form-editar-complexo" prependId="false">
-				<p:outputPanel styleClass="form-cadastro" id="teste">
-					<p:outputLabel for="editIdentificadorComplexo"
-						value="Informe o identificador" />
-					<p:inputText
-						value="#{complexoEolicoBean.complexoEolico.identificador}"
-						id="editIdentificadorComplexo" />
-					<br />
-					<p:outputLabel for="editNomeComplexo"
-						value="Informe o nome do complexo" />
-					<p:inputText value="#{complexoEolicoBean.complexoEolico.nome}"
-						id="editNomeComplexo" />
-					<br />
-					<p:outputLabel for="editUfComplexo" value="Informe UF" />
-					<p:inputText value="#{complexoEolicoBean.complexoEolico.uf}"
-						id="editUfComplexo" />
-					<br />
-					<p:commandButton value="Cadastrar"
-						action="#{complexoEolicoBean.cadastrar()}" update="@form, test"
-						process="@this, @form" />
-				</p:outputPanel>
-			</h:form>
-		</p:dialog>
+
 	</p:outputPanel>
 </body>
 </html>

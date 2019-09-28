@@ -2,10 +2,9 @@ package com.app.logap.bean;
 
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
 
@@ -15,48 +14,73 @@ import com.app.logap.utils.exeptions.ExceptionCustom;
 
 @ManagedBean
 @ViewScoped
-public class ComplexoEolicoBean {
+public class ComplexoEolicoBean extends GenericBean {
 
 	private ComplexoEolicoProxy complexoEolicoProxy;
 
 	private ComplexoEolico complexoEolico;
-	private ComplexoEolico complexoEolicoEscolhido;
 
-	public ComplexoEolicoBean() {
+	private ComplexoEolico complexoEolicoSelecionado;
+
+	private List<ComplexoEolico> listaComplexoEolico;
+
+	@PostConstruct
+	public void init() {
 		complexoEolicoProxy = new ComplexoEolicoProxy();
 		complexoEolico = new ComplexoEolico();
-		complexoEolicoEscolhido = new ComplexoEolico();
+		complexoEolicoSelecionado = new ComplexoEolico();
+		carregarListaComplexoEolico();
+		verificarUsuarioSessao();
 	}
 
 	public void cadastrar() {
-		try {
+		if (complexoEolicoProxy.buscar(complexoEolico).isEmpty()) {
 			complexoEolicoProxy.salvar(complexoEolico);
-		} catch (Exception e) {
-			addMessagem(e.getMessage() + "");
+			carregarListaComplexoEolico();
+			addMessageSuccess("Complexo Eólico cadastrado com sucesso");
+		} else {
+			addMessageError("Complexo Eólico já cadastrado, por favor, escolha outro nome!");
 		}
 		limparFormulario();
 	}
 
 	public void atualizar() {
 		try {
-			complexoEolicoProxy.atualizar(complexoEolico);
+			verificarComplexoEolicoNomeIgual(complexoEolicoSelecionado);
+			complexoEolicoProxy.atualizar(complexoEolicoSelecionado);
+			carregarListaComplexoEolico();
 		} catch (Exception e) {
-			addMessagem(e.getMessage() + "");
+			limparFormulario();
+			addMessageError(e.getMessage() + "");
 		}
 		limparFormulario();
 	}
 
 	public void remover() {
 		try {
-			complexoEolicoProxy.remover(complexoEolico);
+			complexoEolicoProxy.remover(complexoEolicoSelecionado);
+			carregarListaComplexoEolico();
 		} catch (Exception e) {
-			addMessagem(e.getMessage() + "");
+			addMessageError(e.getMessage() + "");
 		}
 		limparFormulario();
 	}
 
+	private void verificarComplexoEolicoNomeIgual(ComplexoEolico complexoEolico) {
+		listaComplexoEolico.stream().forEach(complexo -> {
+			if (complexo.getNome().equalsIgnoreCase(complexoEolico.getNome()) && !complexo.equals(complexoEolico)) {
+				throw new ExceptionCustom("Nome do complexo eólico já existe, por favor, escolha outro nome!");
+			}
+		});
+	}
+
 	public void limparFormulario() {
 		complexoEolico = new ComplexoEolico();
+		complexoEolicoSelecionado = new ComplexoEolico();
+	}
+
+	public void carregarListaComplexoEolico() {
+		listaComplexoEolico = complexoEolicoProxy.buscarTodos();
 	}
 
 	public ComplexoEolico getComplexoEolico() {
@@ -67,21 +91,24 @@ public class ComplexoEolicoBean {
 		this.complexoEolico = complexoEolico;
 	}
 
-	public List<ComplexoEolico> getListaComplexos() {
-		return complexoEolicoProxy.buscarTodos();
+	public List<ComplexoEolico> getListaComplexoEolico() {
+		return listaComplexoEolico;
 	}
 
-	public ComplexoEolico getComplexoEolicoEscolhido() {
-		return complexoEolicoEscolhido;
+	public void setListaComplexoEolico(List<ComplexoEolico> listaComplexoEolico) {
+		this.listaComplexoEolico = listaComplexoEolico;
 	}
 
-	public void setComplexoEolicoEscolhido(ComplexoEolico complexoEolicoEscolhido) {
-		this.complexoEolicoEscolhido = complexoEolicoEscolhido;
+	public ComplexoEolico getComplexoEolicoSelecionado() {
+		return complexoEolicoSelecionado;
 	}
 
-	public void addMessagem(String msg) {
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", msg));
+	public void setComplexoEolicoSelecionado(ComplexoEolico complexoEolicoSelecionado) {
+		this.complexoEolicoSelecionado = complexoEolicoSelecionado;
+	}
+
+	public void linhaSelecionada(SelectEvent event) {
+		complexoEolicoSelecionado = (ComplexoEolico) event.getObject();
 	}
 
 }
