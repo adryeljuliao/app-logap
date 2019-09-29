@@ -17,6 +17,8 @@ import com.app.logap.utils.exeptions.ExceptionCustom;
 @ViewScoped
 public class ComplexoEolicoBean extends GenericBean {
 
+	private static final long serialVersionUID = -3293457316488251119L;
+
 	private ComplexoEolicoProxy complexoEolicoProxy;
 
 	private ComplexoEolico complexoEolico;
@@ -39,15 +41,16 @@ public class ComplexoEolicoBean extends GenericBean {
 			complexoEolicoProxy.salvar(complexoEolico);
 			carregarListaComplexoEolico();
 			addMessageSuccess("Complexo Eólico cadastrado com sucesso");
+			limparFormulario();
 		} else {
 			addMessageError("Complexo Eólico já cadastrado, por favor, escolha outro nome!");
 		}
-		limparFormulario();
+		
 	}
 
 	public void atualizar() {
 		try {
-			verificarComplexoEolicoNomeIgual(complexoEolicoSelecionado);
+			verificarNomeIgualComplexoEolico(complexoEolicoSelecionado);
 			complexoEolicoProxy.atualizar(complexoEolicoSelecionado);
 			carregarListaComplexoEolico();
 		} catch (Exception e) {
@@ -66,7 +69,7 @@ public class ComplexoEolicoBean extends GenericBean {
 		limparFormulario();
 	}
 
-	private void verificarComplexoEolicoNomeIgual(ComplexoEolico complexoEolico) {
+	private void verificarNomeIgualComplexoEolico(ComplexoEolico complexoEolico) {
 		listaComplexoEolico.stream().forEach(complexo -> {
 			if (complexo.getNome().equalsIgnoreCase(complexoEolico.getNome()) && !complexo.equals(complexoEolico)) {
 				throw new ExceptionCustom("Nome do complexo eólico já existe, por favor, escolha outro nome!");
@@ -93,10 +96,6 @@ public class ComplexoEolicoBean extends GenericBean {
 
 	public List<ComplexoEolico> getListaComplexoEolico() {
 		return listaComplexoEolico;
-	}
-
-	public void setListaComplexoEolico(List<ComplexoEolico> listaComplexoEolico) {
-		this.listaComplexoEolico = listaComplexoEolico;
 	}
 
 	public ComplexoEolico getComplexoEolicoSelecionado() {

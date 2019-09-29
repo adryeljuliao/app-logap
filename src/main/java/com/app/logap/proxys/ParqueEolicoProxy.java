@@ -33,4 +33,8 @@ public class ParqueEolicoProxy {
 	public List<ParqueEolico> buscar(ParqueEolico parqueEolico) {
 		return repository.findByName(parqueEolico.getNome());
 	}
+	
+	public List<ParqueEolico> buscarTodos(){
+		return repository.findAll();
+	}
 }
