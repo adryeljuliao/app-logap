@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="../layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+
+		<h:form id="form-complexo-eolico" prependId="false">
+			<div class="row mt-4">
+
+				<p:outputPanel styleClass="col-md-6 col-lg-6 " id="panelCadastro">
+					<div class="card">
+						<div class="card-header">Cadastrar</div>
+						<div class="card-body mt-4">
+							<div class="form-group">
+								<p:outputLabel for="identificadorComplexo" value="Identificador" />
+								<p:inputText styleClass="form-control"
+									value="#{complexoEolicoBean.complexoEolico.identificador}"
+									id="identificadorComplexo" />
+							</div>
+							<div class="form-group">
+								<p:outputLabel for="nomeComplexo" value="Nome Complexo Eólico" />
+								<p:inputText styleClass="form-control"
+									value="#{complexoEolicoBean.complexoEolico.nome}"
+									id="nomeComplexo" />
+							</div>
+							<div class="form-group">
+								<p:outputLabel for="ufComplexo" value="UF" />
+								<p:inputText styleClass="form-control"
+									value="#{complexoEolicoBean.complexoEolico.uf}" id="ufComplexo" />
+							</div>
+							<p:commandButton value="Cadastrar"
+								action="#{complexoEolicoBean.cadastrar()}" update="@form"
+								process="@this, panelCadastro" />
+						</div>
+					</div>
+				</p:outputPanel>
+				<p:outputPanel styleClass="col-md-6 col-lg-6" id="panelAtualizar">
+					<div class="card">
+						<div class="card-header">Editar</div>
+						<div class="card-body mt-4">
+							<div class="form-group">
+								<p:outputLabel for="editarIdentificadorComplexo"
+									value="Identificador" />
+								<p:inputText styleClass="form-control"
+									value="#{complexoEolicoBean.complexoEolicoSelecionado.identificador}"
+									id="editarIdentificadorComplexo" />
+							</div>
+							<div class="form-group">
+								<p:outputLabel for="editarNomeComplexo"
+									value="Nome Complexo Eólico" />
+								<p:inputText styleClass="form-control"
+									value="#{complexoEolicoBean.complexoEolicoSelecionado.nome}"
+									id="editarNomeComplexo" required="true"
+									requiredMessage="Nome do Complexo Obrigatório" />
+								<p:message for="editarNomeComplexo" />
+							</div>
+							<div class="form-group">
+								<p:outputLabel for="editarUfComplexo" value="UF" />
+								<p:inputText styleClass="form-control"
+									value="#{complexoEolicoBean.complexoEolicoSelecionado.uf}"
+									id="editarUfComplexo" />
+							</div>
+							<p:commandButton value="Atualizar"
+								action="#{complexoEolicoBean.atualizar()}" update="@form"
+								process="@this, panelAtualizar" />
+							<p:commandButton value="Excluir"
+								action="#{complexoEolicoBean.remover()}" update="@form"
+								process="@this" />
+							<p:commandButton value="Cancelar"
+								action="#{complexoEolicoBean.cancelar()}" update="@form"
+								process="@this" />
+						</div>
+					</div>
+				</p:outputPanel>
+			</div>
+			<div class="mt-4">
+				<p:dataTable id="tableComplexos" var="complexo"
+					value="#{complexoEolicoBean.listaComplexoEolico}"
+					emptyMessage="Sem dados" selectionMode="single"
+					selection="#{complexoEolicoBean.complexoEolicoSelecionado}"
+					rowKey="#{complexo.id}">
+					<p:ajax event="rowSelect"
+						listener="#{complexoEolicoBean.linhaSelecionada}" update="@form" />
+					<p:ajax event="rowUnselect"
+						listener="#{complexoEolicoBean.linhaDeselecionada}" update="@form" />
+					<p:column headerText="Identificador">
+						<h:outputText value="#{complexo.identificador}" />
+					</p:column>
+					<p:column headerText="Nome">
+						<h:outputText value="#{complexo.nome}" />
+					</p:column>
+					<p:column headerText="UF">
+						<h:outputText value="#{complexo.uf}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

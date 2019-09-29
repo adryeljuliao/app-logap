@@ -4,7 +4,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
 <h:head>
 	<link rel="stylesheet" type="text/css"
 		href="../resources/css/styles.css" />
@@ -22,7 +21,7 @@
 				<p:password styleClass="form-control" id="senha"
 					value="#{loginBean.usuario.senha}" />
 			</div>
-			<p:commandButton value="Entrar" action="#{loginBean.entrar()}"
+			<p:commandButton value="Entrar" action="#{loginBean.entrar}"
 				process="@this, @form" />
 		</h:form>
 	</div>

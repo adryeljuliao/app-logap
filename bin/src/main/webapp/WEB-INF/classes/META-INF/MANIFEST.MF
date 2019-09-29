@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: ProjetoJsfSpring
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Bolsista
+Implementation-Vendor-Id: com.pedrohnf688
+Build-Jdk: 1.8.0_181
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/ProjetoJsfSpring
+Created-By: Maven Integration for Eclipse
+
