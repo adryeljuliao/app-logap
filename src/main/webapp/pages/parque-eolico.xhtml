@@ -10,6 +10,7 @@
 
 	<ui:define name="content">
 		<h:form id="form-parque-eolico" prependId="false">
+			<h5>Parque Eólico</h5>
 			<div class="row mt-4">
 				<p:outputPanel styleClass="col-md-6 col-lg-6"
 					id="panelCadastroParqueEolico">
@@ -128,10 +129,10 @@
 								process="@this, panelAtualizarParqueEolico" />
 							<p:commandButton value="Excluir"
 								action="#{parqueEolicoBean.remover()}"
-								update="@this, tableParques"
-								process="@this" />
+								update="@this, tableParques" process="@this" />
 							<p:commandButton value="Cancelar"
-								action="#{parqueEolicoBean.cancelar()}" update="panelAtualizarParqueEolico, tableParques"
+								action="#{parqueEolicoBean.cancelar()}"
+								update="panelAtualizarParqueEolico, tableParques"
 								process="@this" />
 						</div>
 					</div>
