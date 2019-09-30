@@ -10,6 +10,10 @@
 	<ui:define name="content">
 
 		<h:form id="form-complexo-eolico" prependId="false">
+			<h5>Complexo Eólico</h5>
+			<p:messages id="messages" showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
 			<div class="row mt-4">
 				<p:outputPanel styleClass="col-md-6 col-lg-6 " id="panelCadastro">
 					<div class="card">
@@ -23,7 +27,7 @@
 							</div>
 							<div class="form-group">
 								<p:outputLabel for="nomeComplexo" value="Nome Complexo Eólico" />
-								<p:inputText styleClass="form-control"
+								<p:inputText styleClass="form-control" required="true"
 									value="#{complexoEolicoBean.complexoEolico.nome}"
 									id="nomeComplexo" />
 							</div>
@@ -54,9 +58,7 @@
 									value="Nome Complexo Eólico" />
 								<p:inputText styleClass="form-control"
 									value="#{complexoEolicoBean.complexoEolicoSelecionado.nome}"
-									id="editarNomeComplexo" required="true"
-									requiredMessage="Nome do Complexo Obrigatório" />
-								<p:message for="editarNomeComplexo" />
+									id="editarNomeComplexo" required="true" />
 							</div>
 							<div class="form-group">
 								<p:outputLabel for="editarUfComplexo" value="UF" />

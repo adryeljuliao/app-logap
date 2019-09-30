@@ -11,13 +11,14 @@ import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.app.logap.modelo.Usuario;
 import br.com.app.logap.util.SessaoContexto;
 
 @Scope(value = "session")
 @Component(value = "loginBean")
-@Join(path = "/", to = "pages/login.xhtml")
+@Join(path = "/login", to = "pages/login.xhtml")
 public class LoginBean implements Serializable {
 
 	private static final long serialVersionUID = 8946009153982006623L;
@@ -31,15 +32,9 @@ public class LoginBean implements Serializable {
 		if (usuario.getNomeUsuario().equals("admin") && usuario.getSenha().equals("admin")) {
 			SessaoContexto.atribuirObjeto("usuarioLogado", usuario);
 			limparCampo();
-			return "complexo-eolico.xhtml"; 
+			return "complexo-eolico.xhtml";
 		}
 		return "";
-	}
-
-	public String sair() {
-		HttpSession sessao = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		sessao.invalidate();
-		return "login.xhtml?faces-redirect=true";
 	}
 
 	public void limparCampo() {
@@ -57,7 +52,7 @@ public class LoginBean implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public String getTeste() {
 		return "JSF TESTE";
 	}

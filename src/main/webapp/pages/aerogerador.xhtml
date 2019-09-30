@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="../layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h:form id="form-aerogerador" prependId="false">
+			<h5>Aerogerador</h5>
+			<p:messages id="messages" showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
+			<div class="row mt-4">
+				<p:outputPanel styleClass="col-md-6 col-lg-6"
+					id="panelCadastroAerogerador">
+					<div class="card">
+						<div class="card-header">Cadastrar</div>
+						<div class="card-body mt-4">
+							<div class="row col-12">
+								<div class="col-12" style="margin-bottom: 15px;">
+									<p:outputLabel for="comboboxParqueEolico" value="Parque Eólico" />
+									<p:selectOneMenu id="comboboxParqueEolico" styleClass="col-12"
+										required="true" value="#{aerogeradorBean.parqueEolico}">
+										<f:selectItem itemLabel="Selecione um parque eólico..."
+											itemValue="null" />
+										<f:selectItems value="#{aerogeradorBean.listaParqueEolico}"
+											var="parque" itemLabel="#{parque.nome}"
+											itemValue="#{parque.nome}" />
+										<p:ajax event="itemSelect" update="selectedItemText" />
+									</p:selectOneMenu>
+									<p:message for="comboboxParqueEolico" />
+
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="nomeAerogerador" value="Nome Aerogerador" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogerador.nome}"
+										id="nomeAerogerador" required="true" />
+									<p:message for="nomeAerogerador" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="modeloAerogerador" value="Modelo" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogerador.modelo}"
+										id="modeloAerogerador" required="true" />
+									<p:message for="modeloAerogerador" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="alturaTorre" value="Altura Torre" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogerador.alturaTorre}"
+										id="alturaTorre" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="diametro" value="Diâmetro" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogerador.diametroVarredura}"
+										id="diametro" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="latitudeAerogerador" value="Latitude" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogerador.latitude}"
+										id="latitudeAerogerador" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="longitudeAerogerador" value="Longitude" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogerador.longitude}"
+										id="longitudeAerogerador" />
+								</div>
+							</div>
+							<p:commandButton value="Cadastrar"
+								action="#{aerogeradorBean.cadastrar()}"
+								update="panelCadastroAerogerador, tableAerogerador"
+								process="@this, panelCadastroAerogerador" />
+						</div>
+					</div>
+					<h:outputText id="selectedItemText"
+						value="#{aerogeradorBean.aerogerador.nome}" />
+				</p:outputPanel>
+				<p:outputPanel styleClass="col-md-6 col-lg-6"
+					id="panelAtualizarAerogerador">
+					<div class="card">
+						<div class="card-header">Cadastrar</div>
+						<div class="card-body mt-4">
+							<div class="row col-12">
+								<div class="col-12" style="margin-bottom: 15px;">
+									<p:outputLabel for="editarComboboxParqueEolico"
+										value="Parque Eólico" />
+									<p:selectOneMenu id="editarComboboxParqueEolico"
+										styleClass="col-12" required="true"
+										value="#{aerogeradorBean.parqueEolicoSelecionado}">
+										<f:selectItem itemLabel="Selecione um parque eólico..."
+											itemValue="null" />
+										<f:selectItems value="#{aerogeradorBean.listaParqueEolico}"
+											var="parque" itemLabel="#{parque.nome}"
+											itemValue="#{parque.nome}" />
+										<p:ajax event="itemSelect"
+											update="selectedItemTextSelecionado" />
+									</p:selectOneMenu>
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editarNomeAerogerador"
+										value="Nome Aerogerador" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogeradorSelecionado.nome}"
+										id="editarNomeAerogerador" required="true" />
+									<p:message for="editarNomeAerogerador" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editarModeloAerogerador" value="Modelo" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogeradorSelecionado.modelo}"
+										id="editarModeloAerogerador" required="true" />
+									<p:message for="editarModeloAerogerador" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editarAlturaTorre" value="Altura Torre" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogeradorSelecionado.alturaTorre}"
+										id="editarAlturaTorre" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editartDiametro" value="Diâmetro" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogeradorSelecionado.diametroVarredura}"
+										id="editartDiametro" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editarLatitudeAerogerador" value="Latitude" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogeradorSelecionado.latitude}"
+										id="editarLatitudeAerogerador" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editarLongitudeAerogerador"
+										value="Longitude" />
+									<p:inputText styleClass="form-control"
+										value="#{aerogeradorBean.aerogeradorSelecionado.longitude}"
+										id="editarLongitudeAerogerador" />
+								</div>
+							</div>
+							<p:commandButton value="Atualizar"
+								action="#{aerogeradorBean.atualizar()}"
+								update="panelAtualizarAerogerador, tableAerogerador, @form"
+								process="@this, panelAtualizarAerogerador" />
+							<p:commandButton value="Excluir"
+								action="#{aerogeradorBean.remover()}" update="@form"
+								process="@this" />
+							<p:commandButton value="Cancelar"
+								action="#{aerogeradorBean.cancelar()}" update="@form"
+								process="@this" />
+						</div>
+					</div>
+					<h:outputText id="selectedItemTextSelecionado"
+						value="#{aerogeradorBean.aerogeradorSelecionado.nome}" />
+				</p:outputPanel>
+			</div>
+			<div class="mt-4">
+				<p:dataTable id="tableAerogerador" var="aerogerador"
+					value="#{aerogeradorBean.listaAerogerador}"
+					emptyMessage="Sem dados" selectionMode="single"
+					selection="#{aerogeradorBean.aerogeradorSelecionado}"
+					rowKey="#{aerogerador.id}">
+					<p:ajax event="rowSelect"
+						listener="#{aerogeradorBean.linhaSelecionada}" update="@form" />
+					<p:column headerText="Parque Eólico">
+						<h:outputText value="#{aerogerador.parqueEolico.nome}" />
+					</p:column>
+					<p:column headerText="Nome">
+						<h:outputText value="#{aerogerador.nome}" />
+					</p:column>
+					<p:column headerText="Modelo">
+						<h:outputText value="#{aerogerador.modelo}" />
+					</p:column>
+					<p:column headerText="Latitude">
+						<h:outputText value="#{aerogerador.latitude}" />
+					</p:column>
+					<p:column headerText="Longitude">
+						<h:outputText value="#{aerogerador.longitude}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

@@ -106,4 +106,13 @@ public class ParqueEolico implements Serializable {
 		this.nome = nome;
 	}
 
+	public void adicionarAerogerador(Aerogerador aerogerador) {
+		aerogeradores.add(aerogerador);  
+		aerogerador.setParqueEolico(this);
+	}
+
+	public void removerAerogerador(Aerogerador aerogerador) {
+		aerogeradores.remove(aerogerador);
+		aerogerador.setParqueEolico(null);
+	}
 }

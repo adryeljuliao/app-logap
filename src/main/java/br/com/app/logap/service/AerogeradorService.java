@@ -30,6 +30,10 @@ public class AerogeradorService {
 	public Optional<Aerogerador> findById(Long id) {
 		return repository.findById(id);
 	}
+	
+	public Aerogerador findByName(String nome) {
+		return repository.findByNome(nome);
+	}
 
 	public List<Aerogerador> listAll() {
 		return repository.findAll();

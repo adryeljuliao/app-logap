@@ -18,7 +18,7 @@ import br.com.app.logap.service.ComplexoEolicoService;
 @Scope(value = "session")
 @Component(value = "complexoEolicoBean")
 @Join(path = "/complexo-eolico", to = "pages/complexo-eolico.xhtml")
-public class ComplexoEolicoBean implements Serializable {
+public class ComplexoEolicoBean extends GenericBean implements Serializable {
 
 	private static final long serialVersionUID = -3293457316488251119L;
 
@@ -32,7 +32,7 @@ public class ComplexoEolicoBean implements Serializable {
 	private List<ComplexoEolico> listaComplexoEolico;
 
 	public ComplexoEolicoBean() {
-//		verificarUsuarioSessao();
+		verificarUsuarioSessao();
 	}
 
 	@PostConstruct
@@ -43,16 +43,27 @@ public class ComplexoEolicoBean implements Serializable {
 	}
 
 	public void cadastrar() {
-		complexoEolicoProxy.save(complexoEolico);
-		limparFormulario();
-		carregarListaComplexoEolico();
+		try {
+			complexoEolicoProxy.save(complexoEolico);
+			limparFormulario();
+			carregarListaComplexoEolico();
+
+		} catch (Exception e) {
+			addMessageError("Complexo Eólico já existente, por favor, escolha outro nome!");
+
+		}
 	}
 
-	public void atualizar() throws Exception {
-		verificarNomeIgualComplexoEolico(complexoEolicoSelecionado);
-		complexoEolicoProxy.update(complexoEolicoSelecionado);
-		limparFormulario();
-		carregarListaComplexoEolico();
+	public void atualizar() {
+		try {
+			verificarNomeIgualComplexoEolico(complexoEolicoSelecionado);
+			complexoEolicoProxy.update(complexoEolicoSelecionado);
+			limparFormulario();
+			carregarListaComplexoEolico();
+		} catch (Exception e) {
+			addMessageError("Complexo Eólico já existente, por favor, escolha outro nome!");
+		}
+
 	}
 
 	public void remover() {
@@ -73,7 +84,7 @@ public class ComplexoEolicoBean implements Serializable {
 					throw new Exception("Complexo Eólico já existente, por favor, escolha outro nome!");
 				}
 			}
-		}else {
+		} else {
 			throw new Exception("Erro ao atualizar objeto no banco de dados!");
 		}
 

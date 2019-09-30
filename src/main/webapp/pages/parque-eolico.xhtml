@@ -10,7 +10,11 @@
 
 	<ui:define name="content">
 		<h:form id="form-parque-eolico" prependId="false">
+
 			<h5>Parque Eólico</h5>
+			<p:messages id="messages" showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
 			<div class="row mt-4">
 				<p:outputPanel styleClass="col-md-6 col-lg-6"
 					id="panelCadastroParqueEolico">
@@ -27,8 +31,8 @@
 										<f:selectItem itemLabel="Selecione um complexo eólico..."
 											itemValue="null" />
 										<f:selectItems value="#{parqueEolicoBean.listaComplexoEolico}"
-											var="parque" itemLabel="#{parque.nome}"
-											itemValue="#{parque.nome}" />
+											var="complexo" itemLabel="#{complexo.nome}"
+											itemValue="#{complexo.nome}" />
 										<p:ajax event="itemSelect" update="selectedItemText" />
 									</p:selectOneMenu>
 								</div>
@@ -37,8 +41,7 @@
 										value="Nome Parque Eólico" />
 									<p:inputText styleClass="form-control"
 										value="#{parqueEolicoBean.parqueEolico.nome}"
-										id="nomeParqueEolico" required="true"
-										requiredMessage="Nome do Complexo Obrigatório" />
+										id="nomeParqueEolico" required="true" />
 									<p:message for="nomeParqueEolico" />
 								</div>
 								<div class="form-group col-6">
@@ -46,6 +49,8 @@
 									<p:inputText styleClass="form-control"
 										value="#{parqueEolicoBean.parqueEolico.potenciaInstalada}"
 										id="potenciaParqueEolico" required="true" />
+									<p:message for="potenciaParqueEolico" />
+
 								</div>
 								<div class="form-group col-6">
 									<p:outputLabel for="latitudeParqueEolico" value="Latitude" />
@@ -86,8 +91,8 @@
 										<f:selectItem itemLabel="Selecione um complexo eólico..."
 											itemValue="null" />
 										<f:selectItems value="#{parqueEolicoBean.listaComplexoEolico}"
-											var="parque" itemLabel="#{parque.nome}"
-											itemValue="#{parque.nome}" />
+											var="complexo" itemLabel="#{complexo.nome}"
+											itemValue="#{complexo.nome}" />
 										<p:ajax event="itemSelect" update="editarSelectedItemText" />
 									</p:selectOneMenu>
 								</div>
@@ -128,11 +133,10 @@
 								update="panelAtualizarParqueEolico, tableParques"
 								process="@this, panelAtualizarParqueEolico" />
 							<p:commandButton value="Excluir"
-								action="#{parqueEolicoBean.remover()}"
-								update="@this, tableParques" process="@this" />
+								action="#{parqueEolicoBean.remover()}" update="@form"
+								process="@this" />
 							<p:commandButton value="Cancelar"
-								action="#{parqueEolicoBean.cancelar()}"
-								update="panelAtualizarParqueEolico, tableParques"
+								action="#{parqueEolicoBean.cancelar()}" update="@form"
 								process="@this" />
 						</div>
 					</div>

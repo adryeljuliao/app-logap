@@ -16,37 +16,37 @@ import br.com.app.logap.modelo.ParqueEolico;
 import br.com.app.logap.service.ComplexoEolicoService;
 import br.com.app.logap.service.ParqueEolicoService;
 
-
 @Scope(value = "session")
 @Component(value = "parqueEolicoBean")
 @Join(path = "/parque-eolico", to = "pages/parque-eolico.xhtml")
-public class ParqueEolicoBean implements Serializable {
+public class ParqueEolicoBean extends GenericBean implements Serializable {
 	private static final long serialVersionUID = -4179521049397457722L;
-	
+
 	@Autowired
 	private ParqueEolicoService parqueEolicoProxy;
 	@Autowired
 	private ComplexoEolicoService complexoEolicoProxy;
-	
+
 	private String complexoEolico;
 	private String complexoEolicoSelecionado;
 
-	private ParqueEolico parqueEolico; 
+	private ParqueEolico parqueEolico;
 	private ParqueEolico parqueEolicoSelecionado;
 
 	private List<ComplexoEolico> listaComplexoEolico;
 	private List<ParqueEolico> listaParqueEolico;
 
 	public ParqueEolicoBean() {
+		verificarUsuarioSessao();
 	}
 
-	@PostConstruct  
+	@PostConstruct
 	public void init() {
-		parqueEolico = new ParqueEolico(); 
+		parqueEolico = new ParqueEolico();
 		parqueEolicoSelecionado = new ParqueEolico();
 		carregarListas();
 	}
-	
+
 	public void cadastrar() {
 		if (validarParqueEolico(parqueEolico)) {
 			ComplexoEolico complexoEolico = complexoEolicoProxy.findByName(this.complexoEolico);
@@ -54,27 +54,35 @@ public class ParqueEolicoBean implements Serializable {
 			parqueEolicoProxy.save(parqueEolico);
 			carregarListaParqueEolico();
 			limparFormulario();
+		} else {
+			addMessageError("Parque Eólico já existente, por favor, escolha outro nome!");
+
 		}
 
 	}
 
 	public void atualizar() throws Exception {
 
-		verificarNomeIgualParqueEolico(parqueEolicoSelecionado);
-		ComplexoEolico novoComplexo = complexoEolicoProxy.findByName(complexoEolicoSelecionado);
-		ComplexoEolico velhoComplexo = parqueEolicoSelecionado.getComplexoEolico();
-		velhoComplexo.removerParqueEolico(parqueEolicoSelecionado);
-		novoComplexo.adicionarParqueEolico(parqueEolicoSelecionado);
-		parqueEolicoProxy.save(parqueEolicoSelecionado);
-		carregarListaComplexoEolico();
-		limparFormulario();
+		try {
+			verificarNomeIgualParqueEolico(parqueEolicoSelecionado);
+			ComplexoEolico novoComplexo = complexoEolicoProxy.findByName(complexoEolicoSelecionado);
+			ComplexoEolico velhoComplexo = parqueEolicoSelecionado.getComplexoEolico();
+			velhoComplexo.removerParqueEolico(parqueEolicoSelecionado);
+			novoComplexo.adicionarParqueEolico(parqueEolicoSelecionado);
+			parqueEolicoProxy.save(parqueEolicoSelecionado);
+			carregarListaComplexoEolico();
+			limparFormulario();
+		} catch (Exception e) {
+			addMessageError("Aerogerador já existente, por favor, escolha outro nome!");
+		}
+
 	}
- 
-	public void remover() { 
+
+	public void remover() {
 		ComplexoEolico complexo = complexoEolicoProxy.findByName(parqueEolicoSelecionado.getComplexoEolico().getNome());
-		
+
 		for (ParqueEolico parque : complexo.getParquesEolicos()) {
-			if(parque.getId().equals(parqueEolicoSelecionado.getId())) {
+			if (parque.getId().equals(parqueEolicoSelecionado.getId())) {
 				complexo.removerParqueEolico(parque);
 				complexoEolicoProxy.save(complexo);
 				parqueEolicoProxy.deleteById(parque.getId());
@@ -82,9 +90,9 @@ public class ParqueEolicoBean implements Serializable {
 		}
 		carregarListaComplexoEolico();
 		limparFormulario();
-		
-	} 
-	
+
+	}
+
 	public void cancelar() {
 		limparFormulario();
 	}
@@ -102,12 +110,12 @@ public class ParqueEolicoBean implements Serializable {
 		complexoEolico = null;
 		parqueEolicoSelecionado = new ParqueEolico();
 		parqueEolico = new ParqueEolico();
-	} 
+	}
 
 	public void carregarListas() {
 		carregarListaComplexoEolico();
 		carregarListaParqueEolico();
-	} 
+	}
 
 	private void verificarNomeIgualParqueEolico(ParqueEolico parqueEolico) throws Exception {
 		if (parqueEolico.getId() != null) {
@@ -117,7 +125,7 @@ public class ParqueEolicoBean implements Serializable {
 					throw new Exception("Complexo Eólico já existente, por favor, escolha outro nome!");
 				}
 			}
-		}else {
+		} else {
 			throw new Exception("Erro ao atualizar objeto no banco de dados!");
 		}
 
@@ -126,10 +134,10 @@ public class ParqueEolicoBean implements Serializable {
 	public void carregarListaParqueEolico() {
 		listaParqueEolico = parqueEolicoProxy.listAll();
 	}
-       
+
 	public void carregarListaComplexoEolico() {
 		listaComplexoEolico = complexoEolicoProxy.listAll();
-	}           
+	}
 
 	public void linhaSelecionada(SelectEvent event) {
 		parqueEolicoSelecionado = (ParqueEolico) event.getObject();
@@ -183,5 +191,4 @@ public class ParqueEolicoBean implements Serializable {
 		this.complexoEolico = complexoEolico;
 	}
 
- 
 }

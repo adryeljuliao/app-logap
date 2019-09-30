@@ -1,5 +1,6 @@
 package br.com.app.logap.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,17 @@ import org.springframework.stereotype.Component;
 @Scope(value = "session")
 @Component(value = "algoritmoBean")
 @Join(path = "/algoritmo", to = "pages/algoritmo.xhtml")
-public class AlgoritmoBean {
+public class AlgoritmoBean extends GenericBean implements Serializable {
 
+	private static final long serialVersionUID = -8486333448564351964L;
 	private List<Integer> numerosAdicionados;
 	private List<String> arraySoma;
 	private Integer numero;
 	private Integer numSoma;
+
+	public AlgoritmoBean() {
+		verificarUsuarioSessao();
+	}
 
 	@PostConstruct
 	private void init() {
@@ -28,7 +34,7 @@ public class AlgoritmoBean {
 	public void addNumero() {
 		numerosAdicionados.add(numero);
 		numero = null;
-	} 
+	}
 
 	public void algoritmo() {
 		for (int i = 0; i < numerosAdicionados.size(); i++) {
@@ -39,15 +45,21 @@ public class AlgoritmoBean {
 				}
 			}
 		}
-	}  
-	
-	public void limparCampos() {
-		numSoma = null;
 	}
 
-	public String getSaida () {
-		return numSoma != null ? "Números encontrados que quando somados dão " + numSoma.toString() + ": \n" + arraySoma.toString() : "Nenhum";
+	public void limparCampos() {
+		numSoma = null;
+		arraySoma = new ArrayList<String>();
+		numero = null;
+		numerosAdicionados = new ArrayList<Integer>();
 	}
+
+	public String getSaida() {
+		return numSoma != null
+				? "Números encontrados que quando somados dão " + numSoma.toString() + ": \n" + arraySoma.toString()
+				: "Nenhum";
+	}
+
 	public Integer getNumSoma() {
 		return numSoma;
 	}
@@ -71,6 +83,5 @@ public class AlgoritmoBean {
 	public void setNumerosAdicionados(List<Integer> numerosAdicionados) {
 		this.numerosAdicionados = numerosAdicionados;
 	}
-
 
 }
