@@ -1,9 +1,9 @@
 package br.com.app.logap.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tbl_parque_eolico", schema = "public")
@@ -32,10 +38,14 @@ public class ParqueEolico implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "id_complexo_eolico")
+	@JsonIgnore
 	private ComplexoEolico complexoEolico;
 
-	@OneToMany(mappedBy = "parqueEolico", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Aerogerador> aerogeradores;
+	@OneToMany(mappedBy = "parqueEolico", fetch = FetchType.EAGER, orphanRemoval = true)
+	@Fetch(FetchMode.SUBSELECT)
+	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
+	@JsonIgnore
+	private List<Aerogerador> aerogeradores = new ArrayList<Aerogerador>();
 
 	public ParqueEolico() {
 	}

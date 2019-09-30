@@ -1,9 +1,9 @@
 package br.com.app.logap.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tbl_complexo_eolico", schema = "public")
@@ -30,8 +36,11 @@ public class ComplexoEolico implements Serializable {
 	@Column(length = 45)
 	private String identificador;
 
-	@OneToMany(mappedBy = "complexoEolico", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<ParqueEolico> parquesEolicos;
+	@OneToMany(mappedBy = "complexoEolico", fetch = FetchType.EAGER, orphanRemoval = true)
+	@Fetch(FetchMode.SUBSELECT)
+	@Cascade({ org.hibernate.annotations.CascadeType.ALL })
+	@JsonIgnore
+	private List<ParqueEolico> parquesEolicos = new ArrayList<ParqueEolico>();
 
 	public ComplexoEolico() {
 	}
@@ -74,10 +83,10 @@ public class ComplexoEolico implements Serializable {
 
 	public void setParquesEolicos(List<ParqueEolico> parquesEolicos) {
 		this.parquesEolicos = parquesEolicos;
-	}
+	}   
 
 	public void adicionarParqueEolico(ParqueEolico parqueEolico) {
-		parquesEolicos.add(parqueEolico);
+		parquesEolicos.add(parqueEolico);  
 		parqueEolico.setComplexoEolico(this);
 	}
 

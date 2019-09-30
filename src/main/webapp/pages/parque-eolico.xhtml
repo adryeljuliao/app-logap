@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="../layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<h:form id="form-parque-eolico" prependId="false">
+			<div class="row mt-4">
+				<p:outputPanel styleClass="col-md-6 col-lg-6"
+					id="panelCadastroParqueEolico">
+					<div class="card">
+						<div class="card-header">Cadastrar</div>
+						<div class="card-body mt-4">
+							<div class="row col-12">
+								<div class="col-12" style="margin-bottom: 15px;">
+									<p:outputLabel for="comboboxComplexoEolico"
+										value="Complexo Eólico" />
+									<p:selectOneMenu id="comboboxComplexoEolico"
+										styleClass="col-12" required="true"
+										value="#{parqueEolicoBean.complexoEolico}">
+										<f:selectItem itemLabel="Selecione um complexo eólico..."
+											itemValue="null" />
+										<f:selectItems value="#{parqueEolicoBean.listaComplexoEolico}"
+											var="parque" itemLabel="#{parque.nome}"
+											itemValue="#{parque.nome}" />
+										<p:ajax event="itemSelect" update="selectedItemText" />
+									</p:selectOneMenu>
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="nomeParqueEolico"
+										value="Nome Parque Eólico" />
+									<p:inputText styleClass="form-control"
+										value="#{parqueEolicoBean.parqueEolico.nome}"
+										id="nomeParqueEolico" required="true"
+										requiredMessage="Nome do Complexo Obrigatório" />
+									<p:message for="nomeParqueEolico" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="potenciaParqueEolico" value="Potência" />
+									<p:inputText styleClass="form-control"
+										value="#{parqueEolicoBean.parqueEolico.potenciaInstalada}"
+										id="potenciaParqueEolico" required="true" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="latitudeParqueEolico" value="Latitude" />
+									<p:inputText styleClass="form-control"
+										value="#{parqueEolicoBean.parqueEolico.latitude}"
+										id="latitudeParqueEolico" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="longitudeParqueEolico" value="Longitude" />
+									<p:inputText styleClass="form-control"
+										value="#{parqueEolicoBean.parqueEolico.longitude}"
+										id="longitudeParqueEolico" />
+								</div>
+
+
+							</div>
+							<p:commandButton value="Cadastrar"
+								action="#{parqueEolicoBean.cadastrar()}"
+								update="panelCadastroParqueEolico, tableParques"
+								process="@this, panelCadastroParqueEolico" />
+						</div>
+					</div>
+					<h:outputText id="selectedItemText"
+						value="#{parqueEolicoBean.complexoEolico}" />
+				</p:outputPanel>
+				<p:outputPanel styleClass="col-md-6 col-lg-6"
+					id="panelAtualizarParqueEolico">
+					<div class="card">
+						<div class="card-header">Editar</div>
+						<div class="card-body mt-4">
+							<div class="row col-12">
+								<div class="col-12" style="margin-bottom: 15px;">
+									<p:outputLabel for="editarcomboboxComplexoEolico"
+										value="Complexo Eólico" />
+									<p:selectOneMenu id="editarcomboboxComplexoEolico"
+										styleClass="col-12" required="true"
+										value="#{parqueEolicoBean.complexoEolicoSelecionado}">
+										<f:selectItem itemLabel="Selecione um complexo eólico..."
+											itemValue="null" />
+										<f:selectItems value="#{parqueEolicoBean.listaComplexoEolico}"
+											var="parque" itemLabel="#{parque.nome}"
+											itemValue="#{parque.nome}" />
+										<p:ajax event="itemSelect" update="editarSelectedItemText" />
+									</p:selectOneMenu>
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editarNomeParqueEolico"
+										value="Nome Parque Eólico" />
+									<p:inputText styleClass="form-control"
+										value="#{parqueEolicoBean.parqueEolicoSelecionado.nome}"
+										id="editarNomeParqueEolico" required="true"
+										requiredMessage="Nome do Complexo Obrigatório" />
+									<p:message for="editarNomeParqueEolico" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editarPotenciaParqueEolico"
+										value="Potência" />
+									<p:inputText styleClass="form-control"
+										value="#{parqueEolicoBean.parqueEolicoSelecionado.potenciaInstalada}"
+										id="editarPotenciaParqueEolico" required="true" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editarLatitudeParqueEolico"
+										value="Latitude" />
+									<p:inputText styleClass="form-control"
+										value="#{parqueEolicoBean.parqueEolicoSelecionado.latitude}"
+										id="editarLatitudeParqueEolico" />
+								</div>
+								<div class="form-group col-6">
+									<p:outputLabel for="editarLongitudeParqueEolico"
+										value="Longitude" />
+									<p:inputText styleClass="form-control"
+										value="#{parqueEolicoBean.parqueEolicoSelecionado.longitude}"
+										id="editarLongitudeParqueEolico" />
+								</div>
+
+							</div>
+							<p:commandButton value="Atualizar"
+								action="#{parqueEolicoBean.atualizar()}"
+								update="panelAtualizarParqueEolico, tableParques"
+								process="@this, panelAtualizarParqueEolico" />
+							<p:commandButton value="Excluir"
+								action="#{parqueEolicoBean.remover()}"
+								update="@this, tableParques"
+								process="@this" />
+							<p:commandButton value="Cancelar"
+								action="#{parqueEolicoBean.cancelar()}" update="panelAtualizarParqueEolico, tableParques"
+								process="@this" />
+						</div>
+					</div>
+					<h:outputText id="editarSelectedItemText"
+						value="#{parqueEolicoBean.complexoEolicoSelecionado}" />
+				</p:outputPanel>
+			</div>
+			<div class="mt-4">
+				<p:dataTable id="tableParques" var="parqueEolico"
+					value="#{parqueEolicoBean.listaParqueEolico}"
+					emptyMessage="Sem dados" selectionMode="single"
+					selection="#{parqueEolicoBean.parqueEolicoSelecionado}"
+					rowKey="#{parqueEolico.id}">
+					<p:ajax event="rowSelect"
+						listener="#{parqueEolicoBean.linhaSelecionada}" update="@form" />
+					<p:column headerText="Complexo Eólico">
+						<h:outputText value="#{parqueEolico.complexoEolico.nome}" />
+					</p:column>
+					<p:column headerText="Nome">
+						<h:outputText value="#{parqueEolico.nome}" />
+					</p:column>
+					<p:column headerText="Potência Instalada">
+						<h:outputText value="#{parqueEolico.potenciaInstalada}" />
+					</p:column>
+					<p:column headerText="Latitude">
+						<h:outputText value="#{parqueEolico.latitude}" />
+					</p:column>
+					<p:column headerText="Longitude">
+						<h:outputText value="#{parqueEolico.longitude}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+
+		</h:form>
+
+
+	</ui:define>
+</ui:composition>

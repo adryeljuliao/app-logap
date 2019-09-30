@@ -14,11 +14,11 @@ public class ComplexoEolicoService {
 
 	@Autowired
 	private ComplexoEolicoRepository repository;
-	
-	public ComplexoEolico save(ComplexoEolico complexoEolico) {
-		return repository.save(complexoEolico);
+
+	public void save(ComplexoEolico complexoEolico) {
+		repository.save(complexoEolico);
 	}
-	
+
 	public ComplexoEolico update(ComplexoEolico complexoEolico) {
 		return repository.save(complexoEolico);
 	}
@@ -36,13 +36,13 @@ public class ComplexoEolicoService {
 	}
 
 	public void deleteById(Long id) {
-		 repository.deleteById(id);
+		repository.deleteById(id);
 	}
 
 	public void deleteAll(List<ComplexoEolico> lista) {
 		repository.deleteAll(lista);
 	}
-	
+
 	public ComplexoEolico findByName(String nome) {
 		return repository.findByNome(nome);
 	}
