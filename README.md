@@ -1,5 +1,5 @@
 # app-logap
-Projeto com CRUD desenvolvido com JavaServer Faces(Jsf), Spring Boot, Spring Data JPA, Hibernate com PostgreSQL, PrimeFaces, Bootstrap e publicado no Heroku com o PostgreSql.
+Projeto com CRUD desenvolvido com JavaServer Faces(Jsf), Spring Boot, Spring Data JPA, PostgreSQL, PrimeFaces, Bootstrap e publicado no Heroku usando PostgreSql.
 
 --Link da Aplicação no Heroku: http://app-loga.herokuapp.com/login
 Login: admin
