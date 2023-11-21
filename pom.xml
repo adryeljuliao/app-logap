@@ -20,7 +20,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<jsf.mojarra.version>2.2.11</jsf.mojarra.version>
-		<primefaces.version>7.0</primefaces.version>
+		<primefaces.version>8.0</primefaces.version>
 		<primefaces-extensions.version>6.2.8</primefaces-extensions.version>
 	</properties>
 
